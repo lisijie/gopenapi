@@ -7,38 +7,23 @@ import (
 )
 
 type User struct {
-	openid  string
-	openkey string
-	pf      string
-	charset string
-	api     *OpenApi
+	ApiAdapter
 }
 
 func NewUser(openid, openkey, pf string) *User {
-	return &User{openid: openid, openkey: openkey, pf: pf}
-}
-
-func (this *User) SetApi(api *OpenApi) {
-	this.api = api
-}
-
-func (this *User) makeParams(p map[string]string) map[string]string {
-	params := make(map[string]string)
-	params["openid"] = this.openid
-	params["openkey"] = this.openkey
-	params["pf"] = this.pf
-	for k, v := range p {
-		params[k] = v
-	}
-	return params
+	u := &User{}
+	u.openid = openid
+	u.openkey = openkey
+	u.pf = pf
+	return u
 }
 
 /**
  * 获取登录用户的信息，包括昵称、头像、性别等信息
  * @see http://wiki.open.qq.com/wiki/v3/user/get_info
  */
-func (this *User) GetInfo(p map[string]string) (UserInfo, error) {
-	var data UserInfo
+func (this *User) GetInfo(p map[string]string) (T_UserInfo, error) {
+	var data T_UserInfo
 	ret, err := this.api.Api("/v3/user/get_info", this.makeParams(p), "post", "http")
 	if err != nil {
 		log.Fatal(err)
@@ -56,8 +41,8 @@ func (this *User) GetInfo(p map[string]string) (UserInfo, error) {
  * 获取登录用户的VIP信息
  * @see http://wiki.open.qq.com/wiki/v3/user/total_vip_info
  */
-func (this *User) TotalVipInfo(p map[string]string) (UserVipInfo, error) {
-	var data UserVipInfo
+func (this *User) TotalVipInfo(p map[string]string) (T_UserVipInfo, error) {
+	var data T_UserVipInfo
 	ret, err := this.api.Api("/v3/user/total_vip_info", this.makeParams(p), "post", "http")
 	if err != nil {
 		log.Fatal(err)
@@ -75,8 +60,8 @@ func (this *User) TotalVipInfo(p map[string]string) (UserVipInfo, error) {
  * 验证登录用户是否黄钻，是否年费黄钻，如果是则返回其黄钻等级等信息。
  * @see http://wiki.open.qq.com/wiki/v3/user/is_vip
  */
-func (this *User) IsVip() (UserIsVip, error) {
-	var data UserIsVip
+func (this *User) IsVip() (T_UserIsVip, error) {
+	var data T_UserIsVip
 	ret, err := this.api.Api("/v3/user/is_vip", this.makeParams(nil), "post", "http")
 	if err != nil {
 		log.Fatal(err)
@@ -121,7 +106,7 @@ func (this *User) IsLogin() (bool, error) {
 		log.Fatal(err)
 		return false, err
 	} else {
-		var data RetBase
+		var data T_RetBase
 		json.Unmarshal(ret, &data)
 		if data.Ret > 0 {
 			return false, errors.New(data.Msg)
@@ -144,7 +129,7 @@ func (this *User) IsAreaLogin(seqid string) (bool, error) {
 		log.Fatal(err)
 		return false, err
 	} else {
-		var data RetBase
+		var data T_RetBase
 		json.Unmarshal(ret, &data)
 		if data.Ret > 0 {
 			return false, errors.New(data.Msg)

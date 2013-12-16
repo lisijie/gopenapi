@@ -11,4 +11,9 @@ gopenapi
 
 	user.SetApi(api)
 
-	user.GetInfo()
+	ret, err := user.GetInfo()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(ret)
+	}

@@ -1,14 +1,14 @@
 package gopenapi
 
-type RetBase struct {
+type T_RetBase struct {
 	Ret     int
 	Msg     string
 	Is_Lost int
 }
 
 //GetInfo() 返回的用户信息结构
-type UserInfo struct {
-	RetBase
+type T_UserInfo struct {
+	T_RetBase
 	Nickname           string //昵称
 	Gender             string //性别
 	Country            string //国家（当pf=qzone、pengyou或qplus时返回）
@@ -30,8 +30,8 @@ type UserInfo struct {
 }
 
 //TotalVipInfo() 返回的用户VIP信息
-type UserVipInfo struct {
-	RetBase
+type T_UserVipInfo struct {
+	T_RetBase
 	//QQ会员
 	Is_vip      int //是否为QQ会员（0：不是； 1：是）
 	Is_Year_Vip int //是否是年费QQ会员（0：不是； 1：是）
@@ -71,11 +71,23 @@ type UserVipInfo struct {
 }
 
 //IsVip() 返回的用户VIP信息
-type UserIsVip struct {
-	RetBase
+type T_UserIsVip struct {
+	T_RetBase
 	Is_yellow_vip      int //是否为黄钻用户（0：不是； 1：是）
 	Is_yellow_year_vip int //是否为年费黄钻用户（0：不是； 1：是）
 	Yellow_vip_level   int //黄钻等级。目前最高级别为黄钻8级（如果是黄钻用户才返回此字段）
 	Is_yellow_high_vip int //是否为豪华版黄钻用户（0：不是； 1：是）
 	Yellow_vip_pay_way int //用户的付费类型
+}
+
+type T_BuyGoods struct {
+	T_RetBase
+	Token      string
+	Url_params string
+}
+
+type T_Balance struct {
+	T_RetBase
+	Balance      int //获取到的游戏币余额
+	Comm_balance int //如果存在公共游戏币账户，则这里返回公共游戏币账户中游戏币余额，否则不返回该参数
 }

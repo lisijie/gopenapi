@@ -1,7 +1,7 @@
 gopenapi
 ==========
 
-腾讯OpenAPI的GO语言版本（未完成）
+腾讯OpenAPI的GO语言版本
 
 使用：
 

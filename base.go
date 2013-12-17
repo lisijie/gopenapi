@@ -1,17 +1,17 @@
 package gopenapi
 
-type ApiAdapter struct {
+type ApiBase struct {
 	openid  string
 	openkey string
 	pf      string
 	api     *OpenApi
 }
 
-func (this *ApiAdapter) SetApi(api *OpenApi) {
+func (this *ApiBase) SetApi(api *OpenApi) {
 	this.api = api
 }
 
-func (this *ApiAdapter) makeParams(p map[string]string) map[string]string {
+func (this *ApiBase) makeParams(p map[string]string) map[string]string {
 	params := make(map[string]string)
 	params["openid"] = this.openid
 	params["openkey"] = this.openkey

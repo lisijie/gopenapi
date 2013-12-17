@@ -1,6 +1,7 @@
 package gopenapi
 
 import (
+	"crypto/tls"
 	"errors"
 	"io/ioutil"
 	"log"
@@ -56,16 +57,23 @@ func request(rqurl string, params map[string]string, method string, protocol str
 		resp *http.Response
 	)
 
+	client := &http.Client{}
+
+	if protocol == "https" {
+		client.Transport = &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
+	}
+
 	if method == "get" {
 		querystring := makeQueryString(params)
-		resp, err = http.Get(rqurl + "?" + querystring)
+		resp, err = client.Get(rqurl + "?" + querystring)
 	} else {
 		data := url.Values{}
 		for k, v := range params {
 			data.Set(k, v)
 		}
-		resp, err = http.PostForm(rqurl, data)
+		resp, err = client.PostForm(rqurl, data)
 	}
+
 	if err != nil {
 		log.Fatal(err)
 	}

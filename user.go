@@ -1,3 +1,6 @@
+// 用户信息相关API
+// Copyright 2013 lisijie
+
 package gopenapi
 
 import (
@@ -7,7 +10,7 @@ import (
 )
 
 type User struct {
-	ApiAdapter
+	ApiBase
 }
 
 func NewUser(openid, openkey, pf string) *User {

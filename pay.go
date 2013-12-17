@@ -1,3 +1,6 @@
+// 支付相关API
+// Copyright 2013 lisijie
+
 package gopenapi
 
 import (
@@ -7,7 +10,7 @@ import (
 )
 
 type Pay struct {
-	ApiAdapter
+	ApiBase
 }
 
 func NewPay(openid, openkey, pf string) *Pay {
@@ -24,7 +27,7 @@ func NewPay(openid, openkey, pf string) *Pay {
  */
 func (this *Pay) BuyGoods(params map[string]string) (T_BuyGoods, error) {
 	var data T_BuyGoods
-	ret, err := this.api.Api("/v3/pay/buy_goods", this.makeParams(params), "post", "http")
+	ret, err := this.api.Api("/v3/pay/buy_goods", this.makeParams(params), "post", "https")
 	if err != nil {
 		log.Fatal(err)
 		return data, err
@@ -44,7 +47,7 @@ func (this *Pay) BuyGoods(params map[string]string) (T_BuyGoods, error) {
  */
 func (this *Pay) ConfirmDelivery(params map[string]string) (T_RetBase, error) {
 	var data T_RetBase
-	ret, err := this.api.Api("/v3/pay/confirm_delivery", this.makeParams(params), "post", "http")
+	ret, err := this.api.Api("/v3/pay/confirm_delivery", this.makeParams(params), "post", "https")
 	if err != nil {
 		log.Fatal(err)
 		return data, err
@@ -64,7 +67,7 @@ func (this *Pay) ConfirmDelivery(params map[string]string) (T_RetBase, error) {
  */
 func (this *Pay) ExchangeToken(params map[string]string) (T_BuyGoods, error) {
 	var data T_BuyGoods
-	ret, err := this.api.Api("/v3/pay/exchange_goods", this.makeParams(params), "post", "http")
+	ret, err := this.api.Api("/v3/pay/exchange_goods", this.makeParams(params), "post", "https")
 	if err != nil {
 		log.Fatal(err)
 		return data, err
@@ -84,7 +87,7 @@ func (this *Pay) ExchangeToken(params map[string]string) (T_BuyGoods, error) {
  */
 func (this *Pay) GetBalance(params map[string]string) (T_Balance, error) {
 	var data T_Balance
-	ret, err := this.api.Api("/v3/pay/get_balance", this.makeParams(params), "post", "http")
+	ret, err := this.api.Api("/v3/pay/get_balance", this.makeParams(params), "post", "https")
 	if err != nil {
 		log.Fatal(err)
 		return data, err
